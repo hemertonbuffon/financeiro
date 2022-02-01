@@ -1,6 +1,6 @@
 # Financeiro - Uma API para controle financeiro familiar
 
-Neste projeto farei a implementação de um sistema de controle financeiro familiar. O intuito deste projeto é completar a segunda edição do Alura Challenge Back-end.
+Este projeto consiste em implementação de um sistema de controle financeiro familiar. O intuito deste projeto é completar a segunda edição do Alura Challenge Back-end.
 
 ## Tecnologias 
 
