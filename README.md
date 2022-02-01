@@ -11,8 +11,6 @@ Neste projeto farei a implementação de um sistema de controle financeiro famil
 
 ## Endpoints 
 
-Para acessar a collection do Postman e testar a API acesse o link: [Collection Postman](./resources/)
-
 ### Receitas
 - POST /receitas
 - GET /receitas
