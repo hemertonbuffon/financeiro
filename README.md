@@ -23,5 +23,3 @@ Este projeto consiste em implementação de um sistema de controle financeiro fa
 - GET /despesas/{id}
 - PUT /despesas/{id}
 
----
-Desenvolvido por Hemerton Buffon
