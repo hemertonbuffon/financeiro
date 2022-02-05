@@ -2,11 +2,11 @@ package br.com.alura.financeiro.service
 
 import br.com.alura.financeiro.dto.DespesaForm
 import br.com.alura.financeiro.dto.DespesaView
-import br.com.alura.financeiro.dto.ReceitaView
 import br.com.alura.financeiro.exception.NotFoundException
 import br.com.alura.financeiro.model.Despesa
 import br.com.alura.financeiro.repository.DespesaRepository
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class DespesaService(
@@ -20,16 +20,15 @@ class DespesaService(
     }
 
     fun buscarPorId(id: Long): DespesaView{
-        val despesa = repository.findById(id)
-        if(despesa.isPresent){
-            return DespesaView(
-                id = despesa.get().id,
-                descricao = despesa.get().descricao,
-                valor = despesa.get().valor,
-                data = despesa.get().data
-            )
-        }
-        throw NotFoundException(notFoundMessage)
+        val despesa = repository.findById(id).orElseThrow {NotFoundException(notFoundMessage)}
+
+        return DespesaView(
+                id = despesa.id,
+                descricao = despesa.descricao,
+                valor = despesa.valor,
+                data = despesa.data,
+                categoria = despesa.categoria
+        )
     }
 
     fun cadastrar(nova: DespesaForm) {
@@ -38,7 +37,8 @@ class DespesaService(
                 Despesa(
                     descricao = nova.descricao,
                     valor = nova.valor,
-                    data = nova.data
+                    data = nova.data,
+                    categoria = nova.categoria
                 )
             )
         } catch(e: Exception){
@@ -52,12 +52,14 @@ class DespesaService(
         despesa.valor = nova.valor
         despesa.descricao = nova.descricao
         despesa.data = nova.data
+        despesa.categoria = nova.categoria
 
         return DespesaView(
             id = despesa.id,
             descricao = despesa.descricao,
             valor = despesa.valor,
-            data = despesa.data
+            data = despesa.data,
+            categoria = despesa.categoria
         )
     }
 
@@ -66,6 +68,17 @@ class DespesaService(
         repository.delete(remove)
     }
 
+    fun buscarPorDescricao(descricao: String): List<DespesaView> {
+        val lista = repository.findByDescricaoContaining(descricao)
 
+        return DespesaView.converter(lista)
+    }
+
+    fun buscarPorMes(ano: Int, mes: Int): List<DespesaView> {
+        val primeiroDia = LocalDate.of(ano,mes, 1)
+        val ultimoDia = primeiroDia.withDayOfMonth(primeiroDia.lengthOfMonth())
+
+        return DespesaView.converter(repository.findByDataBetween(primeiroDia, ultimoDia))
+    }
 
 }

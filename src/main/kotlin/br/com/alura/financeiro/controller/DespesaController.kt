@@ -17,8 +17,12 @@ class DespesaController(
 ) {
 
     @GetMapping
-    fun listar(): List<DespesaView>{
-        return service.listar()
+    fun listar(descricao: String?): List<DespesaView>{
+        if (descricao != null) {
+            return service.buscarPorDescricao(descricao)
+        } else {
+            return service.listar()
+        }
     }
 
     @GetMapping("/{id}")
@@ -42,5 +46,10 @@ class DespesaController(
     @Transactional
     fun remover(@PathVariable id: Long){
         return service.remover(id)
+    }
+
+    @GetMapping("/{ano}/{mes}")
+    fun listarPorMes(@PathVariable ano: Int,@PathVariable mes: Int): List<DespesaView>{
+        return service.buscarPorMes(ano, mes)
     }
 }

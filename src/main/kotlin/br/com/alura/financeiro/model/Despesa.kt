@@ -2,7 +2,6 @@ package br.com.alura.financeiro.model
 
 import java.math.BigDecimal
 import java.time.LocalDate
-import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -12,7 +11,9 @@ data class Despesa(
     val id: Long? = null,
     var descricao: String,
     var valor: BigDecimal,
-    var data: LocalDate
+    var data: LocalDate,
+    @Enumerated(EnumType.STRING)
+    var categoria: Categoria = Categoria.OUTRAS
     )    {
 
 }

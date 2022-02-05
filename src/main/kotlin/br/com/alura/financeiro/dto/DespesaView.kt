@@ -1,5 +1,6 @@
 package br.com.alura.financeiro.dto
 
+import br.com.alura.financeiro.model.Categoria
 import br.com.alura.financeiro.model.Despesa
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -9,7 +10,8 @@ class DespesaView(
     val id: Long?,
     val descricao: String,
     val valor: BigDecimal,
-    val data: LocalDate
+    val data: LocalDate,
+    val categoria: Categoria
 ) {
     companion object{
         fun converter(despesas: List<Despesa>) : List<DespesaView>{
@@ -17,7 +19,8 @@ class DespesaView(
                 id = d.id,
                 descricao = d.descricao,
                 valor = d.valor,
-                data = d.data
+                data = d.data,
+                categoria = d.categoria
             )
             }.collect(Collectors.toList())
         }

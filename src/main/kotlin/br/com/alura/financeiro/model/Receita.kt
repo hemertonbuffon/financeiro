@@ -11,6 +11,8 @@ data class Receita(
     val id: Long? = null,
     var descricao: String,
     var valor: BigDecimal,
-    var data: LocalDate
+    var data: LocalDate,
+    @Enumerated(EnumType.STRING)
+    var categoria: Categoria = Categoria.OUTRAS
 )   {
 }
