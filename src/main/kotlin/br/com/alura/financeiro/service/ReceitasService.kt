@@ -7,7 +7,6 @@ import br.com.alura.financeiro.exception.NotFoundException
 import br.com.alura.financeiro.model.Categoria
 import br.com.alura.financeiro.model.Receita
 import br.com.alura.financeiro.repository.ReceitaRepository
-import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
