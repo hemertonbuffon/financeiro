@@ -2,7 +2,9 @@ package br.com.alura.financeiro.service
 
 import br.com.alura.financeiro.dto.DespesaForm
 import br.com.alura.financeiro.dto.DespesaView
+import br.com.alura.financeiro.exception.InvalidEnumeratorException
 import br.com.alura.financeiro.exception.NotFoundException
+import br.com.alura.financeiro.model.Categoria
 import br.com.alura.financeiro.model.Despesa
 import br.com.alura.financeiro.repository.DespesaRepository
 import org.springframework.stereotype.Service
@@ -32,17 +34,21 @@ class DespesaService(
     }
 
     fun cadastrar(nova: DespesaForm) {
-        try {
-            repository.save(
-                Despesa(
-                    descricao = nova.descricao,
-                    valor = nova.valor,
-                    data = nova.data,
-                    categoria = nova.categoria
+        if (nova.categoria in Categoria.values()) {
+            try {
+                repository.save(
+                    Despesa(
+                        descricao = nova.descricao,
+                        valor = nova.valor,
+                        data = nova.data,
+                        categoria = nova.categoria
+                    )
                 )
-            )
-        } catch(e: Exception){
-            println("Erro ao cadastrar")
+            } catch (e: Exception) {
+                println("Erro ao cadastrar")
+            }
+        } else {
+            throw InvalidEnumeratorException("Não é uma categoria válida! " + Categoria.values().toString())
         }
     }
 
