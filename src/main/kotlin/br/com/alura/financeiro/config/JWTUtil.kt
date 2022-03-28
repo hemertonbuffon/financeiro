@@ -37,4 +37,8 @@ class JWTUtil {
         val username = Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(jwt).body.subject
         return UsernamePasswordAuthenticationToken(username, null, null)
     }
+
+    fun getUsername(jwt: String?): String {
+        return Jwts.parser().setSigningKey(secret.toByteArray()).parseClaimsJws(jwt).body.subject
+    }
 }

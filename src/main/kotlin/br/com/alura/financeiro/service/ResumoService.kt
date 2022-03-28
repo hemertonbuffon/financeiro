@@ -2,6 +2,7 @@ package br.com.alura.financeiro.service
 
 import br.com.alura.financeiro.dto.ResumoView
 import br.com.alura.financeiro.model.Despesa
+import br.com.alura.financeiro.model.Usuario
 import br.com.alura.financeiro.repository.DespesaRepository
 import br.com.alura.financeiro.repository.ReceitaRepository
 import org.springframework.stereotype.Service
@@ -13,12 +14,12 @@ class ResumoService(
     private val receitaRepository: ReceitaRepository,
     private val despesaRepository: DespesaRepository
 ) {
-    fun resumoMensal(ano: Int, mes: Int): ResumoView {
+    fun resumoMensal(ano: Int, mes: Int, usuario: Usuario): ResumoView {
         val primeiroDia = LocalDate.of(ano,mes, 1)
         val ultimoDia = primeiroDia.withDayOfMonth(primeiroDia.lengthOfMonth())
 
-        val receitas = receitaRepository.findByDataBetween(primeiroDia, ultimoDia)
-        val despesas = despesaRepository.findByDataBetween(primeiroDia, ultimoDia)
+        val receitas = receitaRepository.findByDataBetweenAndUsuario_Id(primeiroDia, ultimoDia, usuario.id)
+        val despesas = despesaRepository.findByDataBetweenAndUsuario_Id(primeiroDia, ultimoDia, usuario.id)
 
         val sumReceitas: BigDecimal = receitas.sumOf { r -> r.valor }
         val sumDespesas: BigDecimal = despesas.sumOf { d -> d.valor }

@@ -8,6 +8,8 @@ import java.time.LocalDate
 @Repository
 interface ReceitaRepository: JpaRepository<Receita, Long> {
 
-    fun findByDescricaoContaining(descricao: String): List<Receita>
-    fun findByDataBetween(primeiroDia: LocalDate, ultimoDia: LocalDate): List<Receita>
+    fun findByIdAndUsuario_Id(id: Long, user_id: Long): Receita?
+    fun findByUsuario_Id(user_id: Long): List<Receita>
+    fun findByDescricaoContainingAndUsuario_Id(descricao: String, user_id: Long): List<Receita>
+    fun findByDataBetweenAndUsuario_Id(primeiroDia: LocalDate?, ultimoDia: LocalDate?, user_id: Long?): List<Receita>
 }

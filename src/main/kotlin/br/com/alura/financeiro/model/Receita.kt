@@ -13,6 +13,8 @@ data class Receita(
     var valor: BigDecimal,
     var data: LocalDate,
     @Enumerated(EnumType.STRING)
-    var categoria: Categoria = Categoria.OUTRAS
+    var categoria: Categoria = Categoria.OUTRAS,
+    @ManyToOne(fetch = FetchType.EAGER)
+    var usuario: Usuario
 )   {
 }
